@@ -1,39 +1,40 @@
 package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
 
-import com.chucklelib.MecanumChassis;
+import com.chucklelib.movement.MecanumChassis;
+import com.chucklelib.movement.Direction;
 
 @TeleOp(name="MecanumMovementSample", group="SampleOpMode")
 public class MecanumMovementSample extends LinearOpMode {
     private RobotHardware hardware;
-    private MecanumChassis robot;
+    private MecanumChassis chassis;
     
     @Override
     public void runOpMode() {
         hardware = new RobotHardware(hardwareMap);
-        robot = new MecanumChassis(hardware);
+        chassis = new MecanumChassis(hardware);
+        
+        // Movement and turning run forward by default
+        // chassis.setMoveDirection(Direction.FORWARD);
+        // chassis.setTurnDirection(Direction.FORWARD);
+        
+        // In our strafer's case, the move direction will remain unchanged,
+        // but we need to reverse the turn direction for it to work the way we
+        // expect.
+        // chassis.setMoveDirection(Direction.REVERSE);
+        chassis.setTurnDirection(Direction.REVERSE);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            double botHeading = robot.getImu().getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
-            
-            double inputTheta = Math.atan2(-gamepad1.left_stick_y, gamepad1.left_stick_x);
-            double inputPower = Math.sqrt(gamepad1.left_stick_y * gamepad1.left_stick_y + gamepad1.left_stick_x * gamepad1.left_stick_x);
-            double inputTurn = -gamepad1.right_stick_x * 0.7;
-            
-            // robot.robotCentricMove(inputTheta, inputPower, inputTurn);
-            robot.fieldCentricMove(inputTheta, inputPower, inputTurn, botHeading);
+            // chassis.robotCentricMove(gamepad1);
+            chassis.fieldCentricMove(gamepad1);
         }
     }
 }

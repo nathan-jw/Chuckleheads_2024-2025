@@ -7,34 +7,40 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
 
+import com.chucklelib.direction.Direction;
 import com.chucklelib.movement.MecanumChassis;
-import com.chucklelib.movement.Direction;
+import com.chucklelib.movement.controller.TeleopController;
 
 @TeleOp(name="MecanumMovementSample", group="SampleOpMode")
 public class MecanumMovementSample extends LinearOpMode {
     private RobotHardware hardware;
     private MecanumChassis chassis;
+    private TeleopController controller;
     
     @Override
     public void runOpMode() {
         hardware = new RobotHardware(hardwareMap);
         chassis = new MecanumChassis(hardware);
+        controller = new TeleopController(chassis);
+        // if you're feeling dangerous:
+        // controller = new TeleopController(new MecanumChassis(new RobotHardware(hardwareMap)));
         
         // Movement and turning run forward by default
-        // chassis.setMoveDirection(Direction.FORWARD);
-        // chassis.setTurnDirection(Direction.FORWARD);
+        // controller.setMoveDirection(Direction.FORWARD);
+        // controller.setTurnDirection(Direction.FORWARD);
         
-        // In our strafer's case, the move direction will remain unchanged,
-        // but we need to reverse the turn direction for it to work the way we
-        // expect.
-        // chassis.setMoveDirection(Direction.REVERSE);
-        chassis.setTurnDirection(Direction.REVERSE);
+        // controller.setMoveDirection(Direction.REVERSE);
+        // controller.setTurnDirection(Direction.REVERSE);
+        
+        // power/speed tuning
+        // controller.setMovePower(0.5);
+        // controller.setTurnPower(0.5);
 
         waitForStart();
 
         while (opModeIsActive()) {
-            // chassis.robotCentricMove(gamepad1);
-            chassis.fieldCentricMove(gamepad1);
+            // controller.robotCentricMove(gamepad1);
+            controller.fieldCentricMove(gamepad1);
         }
     }
 }

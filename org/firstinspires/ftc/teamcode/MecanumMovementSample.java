@@ -9,9 +9,9 @@ import org.firstinspires.ftc.teamcode.hardware.RobotHardware;
 
 import com.chucklelib.direction.Direction;
 import com.chucklelib.movement.MecanumChassis;
-import com.chucklelib.movement.controller.TeleopController;
+import com.chucklelib.movement.teleop.TeleopController;
 
-@TeleOp(name="MecanumMovementSample", group="SampleOpMode")
+@TeleOp(name="MecanumMovementSample", group="TeleopSample")
 public class MecanumMovementSample extends LinearOpMode {
     private RobotHardware hardware;
     private MecanumChassis chassis;
@@ -29,12 +29,12 @@ public class MecanumMovementSample extends LinearOpMode {
         // controller.setMoveDirection(Direction.FORWARD);
         // controller.setTurnDirection(Direction.FORWARD);
         
-        // controller.setMoveDirection(Direction.REVERSE);
+        controller.setMoveDirection(Direction.REVERSE);
         // controller.setTurnDirection(Direction.REVERSE);
         
         // power/speed tuning
-        // controller.setMovePower(0.5);
-        // controller.setTurnPower(0.5);
+        // controller.setMovePower(2.0);
+        // controller.setTurnPower(2.0);
 
         waitForStart();
 

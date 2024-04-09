@@ -36,6 +36,8 @@ public class MecanumChassis {
     }
     
     
+    public void resetYaw() { imu.resetYaw(); } 
+    
     public DcMotorEx getFrontLeft() { return frontLeft; }
     public DcMotorEx getFrontRight() { return frontRight; }
     public DcMotorEx getBackLeft() { return backLeft; }
